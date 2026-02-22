@@ -15,7 +15,7 @@ class AppCard(QFrame):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(15, 15, 15, 15)
 
-        # 1. Иконка
+        # 1. Icon
         self.icon_label = QLabel()
         self.icon_label.setFixedSize(70, 70)
         self.icon_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -31,14 +31,14 @@ class AppCard(QFrame):
             self.set_placeholder(name)
         layout.addWidget(self.icon_label, alignment=Qt.AlignmentFlag.AlignCenter)
 
-        # 2. Название
+        # 2. Name
         name_lbl = QLabel(name)
         name_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
         name_lbl.setStyleSheet("font-weight: bold; font-size: 13px; color: black; border: none; background: transparent;")
         name_lbl.setWordWrap(True)
         layout.addWidget(name_lbl)
 
-        # 3. Разработчик
+        # 3. Creator
         dev_lbl = QLabel(dev)
         dev_lbl.setAlignment(Qt.AlignmentFlag.AlignCenter)
         dev_lbl.setStyleSheet("color: #666; font-size: 10px; border: none; background: transparent;")
@@ -46,7 +46,7 @@ class AppCard(QFrame):
 
         layout.addStretch()
 
-        # 4. Кнопка
+        # 4. Button
         self.btn = QPushButton("Install")
         self.btn.setStyle(QStyleFactory.create("Fusion")) 
         self.btn.setCursor(Qt.CursorShape.PointingHandCursor)
@@ -81,20 +81,20 @@ class AppCard(QFrame):
         self.btn.setText("Installing...")
         self.btn.setStyleSheet("background-color: #cccccc; color: #666; border-radius: 8px; border: none;")
         
-        # Получаем путь к папке, где лежит твой msstore.py
+        # Getting the path to the folder where code is located
         base_path = os.path.dirname(os.path.abspath(__file__))
 
         try:
             # Check it app_id or .yaml
             if str(app_id).lower().endswith(('.yaml', '.yml')):
-                # Собираем полный путь к YAML файлу
+                # Get a path to .yaml
                 manifest_path = os.path.join(base_path, str(app_id))
                 
                 # Command for installing With manifest
                 # We wrap the full path in quotes to handle spaces correctly
                 cmd = f'winget install --manifest "{manifest_path}" --silent --override "/VERYSILENT /SP- /NORESTART" --accept-package-agreements --accept-source-agreements'
                 
-                # Запускаем через shell=True, это надежнее для строк с кавычками в Windows
+                # Opening with shell=True
                 subprocess.Popen(cmd, shell=True)
                 print(f"DEBUG: WinGet started installing manifest: {manifest_path}")
                 
@@ -1357,3 +1357,4 @@ if __name__ == "__main__":
     win = AppStore()
     win.show()
     sys.exit(app.exec())
+
